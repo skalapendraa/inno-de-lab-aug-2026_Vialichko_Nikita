@@ -33,7 +33,7 @@
 #### 1. Table Name: `Artists`
 * **Description:** Хранит сведения о музыкальных исполнителях и группах.
 * **Attributes:**
-  * `ArtistID`: `INTEGER`, PK, NOT NULL, UNIQUE
+  * `ArtistID`: `INTEGER`, PK
   * `ArtistName`: `VARCHAR(150)`, NOT NULL
   * `Country`: `VARCHAR(100)`
 * **Constraints:**
@@ -43,7 +43,7 @@
 #### 2. Table Name: `Albums`
 * **Description:** Хранит информацию об альбомах артистов.
 * **Attributes:**
-  * `AlbumID`: `INTEGER`, PK, NOT NULL, UNIQUE
+  * `AlbumID`: `INTEGER`, PK
   * `Title`: `VARCHAR(255)`, NOT NULL
   * `ReleaseYear`: `INTEGER`, NOT NULL
   * `ArtistID`: `INTEGER`, FK (REFERENCES `Artists`), NOT NULL
@@ -55,7 +55,7 @@
 #### 3. Table Name: `Songs`
 * **Description:** Хранит данные о конкретных музыкальных композициях.
 * **Attributes:**
-  * `SongID`: `INTEGER`, PK, NOT NULL, UNIQUE
+  * `SongID`: `INTEGER`, PK
   * `Title`: `VARCHAR(255)`, NOT NULL
   * `DurationSeconds`: `INTEGER`, NOT NULL
   * `AlbumID`: `INTEGER`, FK (REFERENCES `Albums`), NOT NULL
@@ -67,7 +67,7 @@
 #### 4. Table Name: `Users`
 * **Description:** Хранит учетные записи зарегистрированных пользователей.
 * **Attributes:**
-  * `UserID`: `INTEGER`, PK, NOT NULL, UNIQUE
+  * `UserID`: `INTEGER`, PK
   * `Username`: `VARCHAR(100)`, NOT NULL
   * `Email`: `VARCHAR(255)`, NOT NULL
   * `CreatedAt`: `TIMESTAMP`, NOT NULL, DEFAULT `CURRENT_TIMESTAMP`
@@ -79,7 +79,7 @@
 #### 5. Table Name: `Playlists`
 * **Description:** Содержит заголовки и настройки пользовательских плейлистов.
 * **Attributes:**
-  * `PlaylistID`: `INTEGER`, PK, NOT NULL, UNIQUE
+  * `PlaylistID`: `INTEGER`, PK
   * `Title`: `VARCHAR(255)`, NOT NULL
   * `IsPublic`: `BOOLEAN`, NOT NULL, DEFAULT `TRUE`
   * `UserID`: `INTEGER`, FK (REFERENCES `Users`), NOT NULL
@@ -91,7 +91,7 @@
 #### 6. Table Name: `PlaylistSongs`
 * **Description:** Таблица для реализации связи **«многие-ко-многим»** между плейлистами и треками.
 * **Attributes:**
-  * `PlaylistSongID`: `INTEGER`, PK, NOT NULL, UNIQUE
+  * `PlaylistSongID`: `INTEGER`, PK
   * `PlaylistID`: `INTEGER`, FK (REFERENCES `Playlists`), NOT NULL
   * `SongID`: `INTEGER`, FK (REFERENCES `Songs`), NOT NULL
   * `AddedAt`: `TIMESTAMP`, NOT NULL, DEFAULT `CURRENT_TIMESTAMP`
