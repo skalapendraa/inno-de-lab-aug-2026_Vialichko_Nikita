@@ -19,7 +19,7 @@
 
 ### Идентификация Сущностей и Атрибутов:
 1. **Артисты (`Artists`):** Исполнители и музыкальные коллективы (`ArtistID`, `ArtistName`, `Country`).
-2. **Альбомы (`Albums`):** Музыкальные альбомы (`AlbumID`, `Title`, `ReleaseYear`).
+2. **Альбомы (`Albums`):** Музыкальные альбомы (`AlbumID`, `Title`, `ReleaseDate`).
 3. **Песни (`Songs`):** Музыкальные треки (`SongID`, `Title`, `DurationSeconds`, `AlbumID`).
 4. **Пользователи (`Users`):** Слушатели сервиса (`UserID`, `Username`, `Email`, `CreatedAt`).
 5. **Плейлисты (`Playlists`):** Подборки треков пользователей (`PlaylistID`, `Title`, `IsPublic`, `UserID`).
@@ -35,21 +35,20 @@
 * **Description:** Хранит сведения о музыкальных исполнителях и группах.
 * **Attributes:**
   * `ArtistID`: `INTEGER`, PK
-  * `ArtistName`: `VARCHAR(150)`, NOT NULL
+  * `ArtistName`: `VARCHAR(150)`, NOT NULL, UNIQUE
   * `Country`: `VARCHAR(100)`
 * **Constraints:**
   * `PK_Artists`: `PRIMARY KEY (ArtistID)`
-  * `UQ_ArtistName`: `UNIQUE (ArtistName)`
 
 #### 2. Table Name: `Albums`
 * **Description:** Хранит информацию о музыкальных альбомах.
 * **Attributes:**
   * `AlbumID`: `INTEGER`, PK
   * `Title`: `VARCHAR(255)`, NOT NULL
-  * `ReleaseYear`: `INTEGER`, NOT NULL
+  * `ReleaseDate`: `DATE`, NOT NULL
 * **Constraints:**
   * `PK_Albums`: `PRIMARY KEY (AlbumID)`
-  * `CHK_ReleaseYear`: `CHECK (ReleaseYear >= 1900 AND ReleaseYear <= 2100)`
+  * `CHK_ReleaseDate`: `CHECK (ReleaseDate >= '1900-01-01' AND ReleaseDate <= '2100-12-31')`
 
 #### 3. Table Name: `AlbumArtists`
 * **Description:** Промежуточная таблица для реализации связи **«многие-ко-многим»** между альбомами и артистами (у альбома может быть несколько авторов).
@@ -83,13 +82,11 @@
 * **Description:** Хранит учетные записи зарегистрированных пользователей.
 * **Attributes:**
   * `UserID`: `INTEGER`, PK
-  * `Username`: `VARCHAR(100)`, NOT NULL
-  * `Email`: `VARCHAR(255)`, NOT NULL
+  * `Username`: `VARCHAR(100)`, NOT NULL, UNIQUE
+  * `Email`: `VARCHAR(255)`, NOT NULL, UNIQUE
   * `CreatedAt`: `TIMESTAMP`, NOT NULL, DEFAULT `CURRENT_TIMESTAMP`
 * **Constraints:**
   * `PK_Users`: `PRIMARY KEY (UserID)`
-  * `UQ_Email`: `UNIQUE (Email)`
-  * `UQ_Username`: `UNIQUE (Username)`
 
 #### 7. Table Name: `Playlists`
 * **Description:** Содержит заголовки и настройки пользовательских плейлистов.
