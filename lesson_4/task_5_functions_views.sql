@@ -18,7 +18,7 @@ SELECT
     CalculateAnnualBonus(EmployeeID, Salary) AS AnnualBonus
 FROM Employees;
 
--- 3. Создание представления IT_Department_View
+-- 3. Создание представления IT_Department_View 
 CREATE OR REPLACE VIEW IT_Department_View AS
 SELECT 
     EmployeeID, 
@@ -26,7 +26,7 @@ SELECT
     LastName, 
     Salary
 FROM Employees
-WHERE Department IN ('IT', 'Senior IT');
+WHERE Department = 'IT';
 
 -- 4. Выборка из представления
 SELECT * FROM IT_Department_View;
