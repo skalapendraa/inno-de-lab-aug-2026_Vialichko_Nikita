@@ -2,7 +2,6 @@
 number = int(input("Введите целое число: "))
 
 # Проверяем остаток от деления на 2
-if number % 2 == 0:
-    print(f"Число {number} - чётное.")
-else:
-    print(f"Число {number} - нечётное.")
+result = "чётное" if number % 2 == 0 else "нечётное"
+
+print(f"Число {number} - {result}.")
