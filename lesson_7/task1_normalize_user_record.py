@@ -7,25 +7,23 @@
 # Исходная необработанная строка из источника данных
 raw_user_record = " 10827 ; aLeXanDer_vLaDimiRov ; mInSk ; ACTIVE "
 
-# 1. Разбиваем строку по разделителю ";"
-raw_elements = raw_user_record.split(";")
+# 1. Разбиваем строку по разделителю ";" и очищаем элементы от внешних пробелов
+elements = [item.strip() for item in raw_user_record.split(";")]
 
-# 2. Очищаем элементы от внешних пробелов
-cleaned_elements = [item.strip() for item in raw_elements]
+# 2. Модифицируем элементы списка на месте (или заменяем по индексам):
+# Индекс 0: добавляем префикс "UID-"
+elements[0] = f"UID-{elements[0]}"
 
-# 3. Применяем префикс "UID-" к идентификатору с помощью f-строки
-uid = f"UID-{cleaned_elements[0]}"
+# Индекс 1: заменяем "_" на пробел и приводим слова к заглавному регистру
+elements[1] = elements[1].replace("_", " ").title()
 
-# 4. Заменяем "_" на пробел и приводим слова к заглавному регистру
-name = cleaned_elements[1].replace("_", " ").title()
+# Индекс 2: переводим название города в верхний регистр
+elements[2] = elements[2].upper()
 
-# 5. Переводим название города в верхний регистр
-city = cleaned_elements[2].upper()
+# Индекс 3: переводим статус в нижний регистр
+elements[3] = elements[3].lower()
 
-# 6. Переводим статус в нижний регистр
-status = cleaned_elements[3].lower()
-
-# 7. Объединяем элементы в строку с разделителем " | "
-normalized_record = " | ".join([uid, name, city, status])
+# 3. Объединяем измененный список в итоговую строку
+normalized_record = " | ".join(elements)
 
 print(f"Нормализованная запись: {normalized_record}")
