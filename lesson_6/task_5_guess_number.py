@@ -13,13 +13,11 @@ while attempts > 0:
         print("Ты угадал! Отличная работа.")
         break
 
-    # Действия происходят ровно один раз за итерацию цикла
     attempts -= 1
     attempt_count += 1
 
     if attempts > 0:
         hint = "мало" if guess < secret_number else "много"
         print(f"Слишком {hint}! Осталось попыток: {attempts}")
-
-if attempts == 0:
+else:
     print(f"Попытки закончились. Я загадал число {secret_number}.")
