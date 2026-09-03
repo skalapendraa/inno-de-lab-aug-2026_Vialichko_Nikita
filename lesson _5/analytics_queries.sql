@@ -1,4 +1,3 @@
-
 -- Description: Бизнес-запросы к аналитической модели DWH
 
 
@@ -41,22 +40,16 @@ JOIN dim_songs s ON f.song_key = s.song_key
 GROUP BY s.genre
 ORDER BY skip_rate_pct DESC;
 
--- Запрос 4: Распределение объема стримов Плейлисты /Прямой поиск
--- Бизнес-цель: Оценка влияния рекомендательных алгоритмов и плейлистов на общий трафик
+-- Запрос 4: Распределение объема стримов по источнику запуска трека
+-- Бизнес-цель: Оценка влияния рекомендательных алгоритмов/плейлистов на общий трафик,
+-- а также различение прямого поиска и захода со страницы артиста
 SELECT 
-    CASE 
-        WHEN p.playlist_key = -1 THEN 'Прямой поиск / Страница артиста'
-        ELSE 'Воспроизведение из плейлиста'
-    END AS stream_source,
+    f.play_source,
     COUNT(f.stream_id) AS total_streams,
     ROUND(COUNT(f.stream_id)::NUMERIC / (SELECT COUNT(*) FROM fact_streams) * 100, 2) AS share_pct
 FROM fact_streams f
-JOIN dim_playlists p ON f.playlist_key = p.playlist_key
-GROUP BY 
-    CASE 
-        WHEN p.playlist_key = -1 THEN 'Прямой поиск / Страница артиста'
-        ELSE 'Воспроизведение из плейлиста'
-    END;
+GROUP BY f.play_source
+ORDER BY total_streams DESC;
 
 -- Запрос 5: Динамика нагрузки и уникальных слушателей по дням недели
 -- Бизнес-цель: Выявление пиковых дней для планирования маркетинговых активов и релизов
